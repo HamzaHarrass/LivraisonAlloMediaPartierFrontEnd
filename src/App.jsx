@@ -1,11 +1,12 @@
+import React from "react"
+import "./components/Auth/index"
+import Auth from "./components/Auth/index"
 function App() {
 
   return (
-  <div>
-    <h1 className="text-3xl font-bold underline">
-          Hello world!
-    </h1>
-</div>
+    <React.StrictMode>
+    <Auth />
+  </React.StrictMode>
   )
 }
 
