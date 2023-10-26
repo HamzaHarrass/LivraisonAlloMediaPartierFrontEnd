@@ -37,7 +37,20 @@ function Auth() {
   };
 
   const register = () => {
-    const { username, email, password, role } = formData;
+    const { username, email, password, role ,confirmPassword } = formData;
+
+    if (!username || !email || !password || !confirmPassword) {
+        setRegistrationError("Veuillez remplir tous les champs.");
+        return;
+      }
+  
+      if (password !== confirmPassword) {
+        setRegistrationError("Passwords do not match.");
+        return;
+      }
+  
+      setRegistrationError(null);
+
     const newUser = {
       username,
       email,
@@ -45,7 +58,6 @@ function Auth() {
       role,
     };
 
-    console.log(newUser);
     axios
       .post("http://localhost:3000/auth/register", newUser)
       .then((response) => {
@@ -58,7 +70,7 @@ function Auth() {
       .catch((error) => {
         console.error("Registration failed:", error);
         setRegistrationSuccess(false)
-        setRegistrationError("Registration failed. Please try again.");
+        setRegistrationError("Registration failed. "+ error.response?.data?.message);
       });
   };
 
@@ -109,7 +121,13 @@ function Auth() {
                 </div>
                 <div className="input-group">
                   <i className="bx bxs-lock-alt"></i>
-                  <input type="password" placeholder="Confirm password" />
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-group">
                   <i className="bx bxs-lock-alt"></i>
