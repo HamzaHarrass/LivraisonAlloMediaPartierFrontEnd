@@ -1,8 +1,35 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./index.css"
 
 
 class Auth extends Component {
+    state = {
+        registrationSuccess: false,
+        registrationError: null, // To store the error message
+      };
+    //   handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const navigate = useNavigate()
+    //     try {
+    //         await axios({
+    //             method: 'post',
+    //             url: '/api/auth/register',
+    //             data: this.state
+    //             });
+    //             console.log('success');
+    //             this.setState({registrationSuccess: true});
+    //             setTimeout(()=>{navigate('/')}, 2000);
+    //             } catch (err) {
+    //                 if(err && err.response){
+    //                     let errors = Object.values(err.response.data).map((value)=>{return value[0]})
+    //                     this.setState({registrationError: errors})
+    //                     }else{
+    //                         throw err;
+    //                         }
+    //                    }
+    //                 }
     componentDidMount() {
       const container = document.getElementById("container");
   
@@ -21,6 +48,29 @@ class Auth extends Component {
         container.classList.toggle("sign-up");
       }
     } 
+    register = () => {
+        const username = document.querySelector(".sign-up input[type='text']").value;
+        const email = document.querySelector(".sign-up input[type='email']").value;
+        const password = document.querySelector(".sign-up input[type='password']").value;
+      
+        const newUser = {
+          username: username,
+          email: email,
+          password: password,
+        };
+        axios
+        .post('http://localhost:3000/auth/register', newUser)
+        .then((response) => {
+            console.log(response);
+          console.log("Registration successful");
+          const history = useNavigate();
+          history.push('/login'); 
+        })
+        .catch((error) => {
+          console.error("Registration failed:", error);
+          // Handle registration errors, e.g., display an error message to the user.
+        });
+    }
     
     render() {
 
@@ -49,7 +99,7 @@ class Auth extends Component {
                                     <i className='bx bxs-lock-alt'></i>
                                     <input type="password" placeholder="Confirm password"/>
                                 </div>
-                                <button>
+                                <button onClick={this.register}>
                                     Sign up
                                 </button>
                                 <p>
