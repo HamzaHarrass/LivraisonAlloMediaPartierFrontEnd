@@ -36,6 +36,7 @@ class Auth extends Component {
       if (container) {
         setTimeout(() => {
           container.classList.add("sign-in");
+          
         }, 200);
       }
     }
