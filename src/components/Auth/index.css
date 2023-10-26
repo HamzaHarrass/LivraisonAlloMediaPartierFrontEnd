@@ -280,14 +280,25 @@
   }
 
   .error-message {
-    color: #ff0000; /* Red text color */
-    background-color: #ffeaea; /* Light red background */
-    padding: 10px; /* Padding around the message */
-    border: 1px solid #ff0000; /* Red border */
-    border-radius: 4px; /* Rounded corners */
-    margin: 10px 0; /* Spacing around the error message */
-    text-align: center; /* Center-align text */
-    font-weight: bold; /* Make the text bold */
+    color: #ff0000;
+    background-color: #ffeaea; 
+    padding: 10px;
+    border: 1px solid #ff0000; 
+    border-radius: 4px;
+    margin: 10px 0;
+    text-align: center; 
+    font-weight: bold; 
+  }
+  
+  .info-message {
+    color: #0065fc; 
+    background-color: #ffeaea; 
+    padding: 10px; 
+    border: 1px solid #0065fc; 
+    border-radius: 4px; 
+    margin: 10px 0; 
+    text-align: center;
+    font-weight: bold; 
   }
   
   /* RESPONSIVE */

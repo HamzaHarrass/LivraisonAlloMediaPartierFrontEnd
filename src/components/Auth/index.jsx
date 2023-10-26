@@ -52,10 +52,12 @@ function Auth() {
         console.log(response);
         console.log("Registration successful");
         setRegistrationSuccess(true);
+        setRegistrationError(false)
         navigate("/login");
       })
       .catch((error) => {
         console.error("Registration failed:", error);
+        setRegistrationSuccess(false)
         setRegistrationError("Registration failed. Please try again.");
       });
   };
@@ -67,6 +69,11 @@ function Auth() {
           <div className="col align-items-center flex-col sign-up">
             {registrationError && (
               <div className="error-message">{registrationError}</div>
+            )}
+             {registrationSuccess && (
+              <div className="info-message">
+                User registered successfully. Check your email for configuration.
+              </div>
             )}
             <div className="form-wrapper align-items-center">
               <div className="form sign-up">
