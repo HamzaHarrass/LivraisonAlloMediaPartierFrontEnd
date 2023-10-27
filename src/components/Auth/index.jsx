@@ -74,7 +74,7 @@ function Auth() {
         console.log("Registration successful");
         setRegistrationSuccess(true);
         setRegistrationError(false)
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Registration failed:", error);
@@ -106,8 +106,7 @@ function Auth() {
         .then((response) => {
             console.log(response);
             console.log("Login successful");
-            // You can store the user's token or authentication status here
-            // and then navigate to another page, e.g., dashboard
+            localStorage.setItem("user", JSON.stringify(response.data.user))
             navigate("/dashboard");
         })
         .catch((error) => {

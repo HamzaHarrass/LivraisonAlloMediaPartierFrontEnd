@@ -1,13 +1,17 @@
 import React from "react"
 import "./components/Auth/index"
 import Auth from "./components/Auth/index"
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter,Route, Routes } from "react-router-dom"
+import Dashboard from "./components/dashbord/Dashboard"
 function App() {
 
   return (
-    <React.StrictMode>
+  <React.StrictMode>
       <BrowserRouter>
-        <Auth />
+      <Routes>
+        <Route path="/" element={<Auth/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+      </Routes>
       </BrowserRouter>
   </React.StrictMode>
   )
