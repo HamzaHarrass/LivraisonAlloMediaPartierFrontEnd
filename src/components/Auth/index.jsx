@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
@@ -12,6 +12,11 @@ function Auth() {
   });
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registrationError, setRegistrationError] = useState(null);
+  const [loginData, setLoginData] = useState({
+    loginEmail: "",
+    loginPassword: "",
+  });
+  const [loginError, setLoginError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -34,6 +39,10 @@ function Auth() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLoginChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
   const register = () => {
@@ -73,6 +82,39 @@ function Auth() {
         setRegistrationError("Registration failed. "+ error.response?.data?.message);
       });
   };
+
+  
+    const login = () => {
+        const { loginEmail, loginPassword } = loginData;
+
+        // Basic login validation
+        if (!loginEmail || !loginPassword) {
+        setLoginError("Please fill in both email and password.");
+        return;
+        }
+
+        // If validation passes, proceed with login
+        setLoginError(null);
+
+        const user = {
+        email: loginEmail,
+        password: loginPassword,
+        };
+
+        axios
+        .post("http://localhost:3000/auth/login", user)
+        .then((response) => {
+            console.log(response);
+            console.log("Login successful");
+            // You can store the user's token or authentication status here
+            // and then navigate to another page, e.g., dashboard
+            navigate("/dashboard");
+        })
+        .catch((error) => {
+            console.error("Login failed:", error);
+            setLoginError("Login failed. Please check your credentials.");
+        });
+    };
 
   return (
     <div>
@@ -151,17 +193,29 @@ function Auth() {
             </div>
           </div>
           <div className="col align-items-center flex-col sign-in">
+          {loginError && <div className="error-message">{loginError}</div>}
             <div className="form-wrapper align-items-center">
               <div className="form sign-in">
                 <div className="input-group">
                   <i className="bx bxs-user"></i>
-                  <input type="text" placeholder="Username" />
-                </div>
+                  <input
+                    type="email"
+                    name="loginEmail"
+                    placeholder="Email"
+                    value={loginData.loginEmail}
+                    onChange={handleLoginChange}
+                  />                </div>
                 <div className="input-group">
                   <i className="bx bxs-lock-alt"></i>
-                  <input type="password" placeholder="Password" />
+                 <input
+                    type="password"
+                    name="loginPassword"
+                    placeholder="Password"
+                    value={loginData.loginPassword}
+                    onChange={handleLoginChange}
+                  />
                 </div>
-                <button>Sign in</button>
+                <button onClick={login}>Sign in</button>
                 <p>
                   <b>Forgot password?</b>
                 </p>
@@ -178,15 +232,32 @@ function Auth() {
         </div>
         <div className="row content-row">
           <div className="col align-items-center flex-col">
-            <div className="text sign-in">
-              <h2>Welcome</h2>
-            </div>
-            <div className="img sign-in"></div>
+          <div className="text sign-in">
+            <h2>Welcome</h2>
+            <p>Thank you for visiting our website. Please sign in to access your account.</p>
+            
+            <p>
+            <li>Access exclusive features.</li>
+            <li>Manage your profile.</li>
+            <li>Track your orders.</li>
+            </p> 
+            <p>If you dont have an account, you can <b onClick={toggle} className="pointer">sign up here</b>.</p>
+        </div>
+  <div className="img sign-in"></div>
           </div>
           <div className="col align-items-center flex-col">
             <div className="img sign-up"></div>
             <div className="text sign-up">
-              <h2>Join with us</h2>
+            <h2>Join with us</h2>
+            <p>Ready to get started? Sign up today and enjoy the following benefits:</p>
+            
+            <p>
+            <li>Access exclusive offers.</li>
+            <li>Customize your profile.</li>
+            <li>Place orders with ease.</li>
+            </p>
+            
+            <p>If you already have an account, you can <b onClick={toggle} className="pointer">sign in here</b>.</p>
             </div>
           </div>
         </div>
