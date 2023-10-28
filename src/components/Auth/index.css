@@ -304,6 +304,10 @@
   .pointer {
     cursor: pointer;
   }
+
+  .forgetPassword{
+    cursor: pointer;
+  }
   /* RESPONSIVE */
   
   @media only screen and (max-width: 425px) {

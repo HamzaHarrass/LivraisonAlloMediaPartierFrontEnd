@@ -114,6 +114,10 @@ function Auth() {
         });
     };
 
+    const forgetPassword = ()=>{
+      navigate("/forget_password")
+    }
+
   return (
     <div>
       <div id="container" className="container">
@@ -215,7 +219,7 @@ function Auth() {
                 </div>
                 <button onClick={login}>Sign in</button>
                 <p>
-                  <b>Forgot password?</b>
+                  <b className="forgetPassword" onClick={forgetPassword}>Forgot password?</b>
                 </p>
                 <p>
                   <span>Dont have an account?</span>
