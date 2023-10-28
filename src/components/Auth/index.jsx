@@ -114,8 +114,8 @@ function Auth() {
         });
     };
 
-    const forgetPassword = ()=>{
-      navigate("/forget_password")
+    const SendEmail = ()=>{
+      navigate("/send_Email")
     }
 
   return (
@@ -219,7 +219,7 @@ function Auth() {
                 </div>
                 <button onClick={login}>Sign in</button>
                 <p>
-                  <b className="forgetPassword" onClick={forgetPassword}>Forgot password?</b>
+                  <b className="SendEmail" onClick={SendEmail}>Forgot password?</b>
                 </p>
                 <p>
                   <span>Dont have an account?</span>

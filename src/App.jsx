@@ -4,6 +4,7 @@ import Auth from "./components/Auth/index"
 import { BrowserRouter,Route, Routes } from "react-router-dom"
 import Dashboard from "./components/dashbord/Dashboard"
 import ForgetPassword from "./components/foregetPassword/forgetPassword"
+import SendEmail from "./components/sendEmail/SendEmail"
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Auth/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/forget_password" element={<ForgetPassword/>} />
+        <Route path="/send_Email" element={<SendEmail/>} />
       </Routes>
       </BrowserRouter>
   </React.StrictMode>
