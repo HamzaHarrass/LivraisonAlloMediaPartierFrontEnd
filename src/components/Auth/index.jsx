@@ -93,7 +93,6 @@ function Auth() {
         return;
         }
 
-        // If validation passes, proceed with login
         setLoginError(null);
 
         const user = {
