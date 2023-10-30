@@ -1,11 +1,35 @@
-import { useEffect } from "react"; 
+import { useEffect , useState } from "react"; 
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../Auth/index.css";
  
  function ForgetPassword() {
-    
+    const [newPassword, setNewPassword] = useState("");
+    const [newPassword_confirmation, setnewPassword_confirmation] = useState("");
+    const [passwordReset, setPasswordReset] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const [token, setToken] = useState(null);
+    const handleResetPassword = async () => {
+      if (newPassword !== newPassword_confirmation) {
+        setError("Passwords do not match.");
+        return;
+      }
+      try {
+        await axios.post(`http://localhost:3000/auth/reset-password?token=${token}`, { newPassword, newPassword_confirmation });
+        setPasswordReset(true);
+
+        setError(null); 
+        navigate("/");
+      } catch (error) {
+        console.error("Error resetting password:", error);
+        setError("Error resetting password. Please try again.");
+      }
+    };
         useEffect(() => {
+          let urlToken = new URLSearchParams(location.search).get("token");
+          setToken(urlToken);
           const container = document.getElementById("container");
-      
           if (container) {
             setTimeout(() => {
               container.classList.add("sign-in");
@@ -24,20 +48,28 @@ import "../Auth/index.css";
 					<div className="form sign-in">
 						<div className="input-group">
 							<i className='bx bxs-user'></i>
-							<input type="text" placeholder="Username" />
+							<input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
 						</div>
 						<div className="input-group">
 							<i className='bx bxs-lock-alt'></i>
-							<input type="password" placeholder="Password" />
+							<input type="password" placeholder="Confirmer Password" value={newPassword_confirmation} onChange={(e) => setnewPassword_confirmation(e.target.value)} />
 						</div>
-						<button>
-							confirmer
-						</button>
+						<button onClick={handleResetPassword} > confirmer </button>
 					
 					</div>
 				</div>
 				<div className="form-wrapper">
-		
+                {passwordReset && (
+                <div className="success-message">
+                  Password reset successful. You can now log in with your new password.
+                </div>
+              )}
+
+              {error && (
+                <div className="error-message">
+                  {error}
+                </div>
+              )}
 				</div>
 			</div>
 		</div>
