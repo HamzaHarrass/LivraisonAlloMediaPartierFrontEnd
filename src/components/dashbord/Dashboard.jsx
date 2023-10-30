@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
+import axios from "axios";
 import "./index.css";
 
 function Dashboard() {
 
-    const user = JSON.parse(localStorage.getItem("user"))
+  const [user,setUser] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate(); 
 
   const toggleDropdown = () => {
@@ -15,9 +17,31 @@ function Dashboard() {
   const logout = () => {
 
     localStorage.removeItem("authToken");
-
+    localStorage.removeItem("user");
     navigate("/");
   };
+
+  const sendVerificationEmail = () => {
+    console.log(user.email);
+    axios.post("http://localhost:3000/auth/send-verification-email2",{email:user.email})
+      .then(() => {
+
+        console.log("Verification email sent successfully");
+      })
+      .catch((error) => {
+        console.error("Error sending verification email:", error);
+      });
+  };
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+    axios.get("YOUR_API_ENDPOINT/check-verification-status")
+      .then((response) => {
+        setIsVerified(response.data.isVerified);
+      })
+      .catch((error) => {
+        console.error("Error checking verification status:", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -48,7 +72,19 @@ function Dashboard() {
                 </ul>
             </nav>
       </header>
-        <p className="welcome-message">Welcome, {user.username}!</p>
+      {isVerified ? ( 
+        <div>
+          <p className="welcome-message">Welcome, {user.username}!</p>
+          {}
+        </div>
+      ) : ( 
+        <div>
+          <p className="verification-message">
+            Your account is not verified. Please check your email for a verification link.
+          </p>
+          <button onClick={sendVerificationEmail}>Send Verification Email</button>
+        </div>
+      )}
         </div>
   );
 }
