@@ -18,23 +18,28 @@ function Dashboard() {
 
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("token")
     navigate("/");
   };
 
   const sendVerificationEmail = () => {
-    console.log(user.email);
-    axios.post("http://localhost:3000/auth/send-verification-email2",{email:user.email})
-      .then(() => {
-
-        console.log("Verification email sent successfully");
-      })
-      .catch((error) => {
-        console.error("Error sending verification email:", error);
-      });
+    if (user) {
+      axios.post("http://localhost:3000/auth/send-verification-email2", { email: user.email })
+        .then(() => {
+          console.log("Verification email sent successfully");
+        })
+        .catch((error) => {
+          console.error("Error sending verification email:", error);
+        });
+    }
   };
+
+
+
+  
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
-    axios.get("YOUR_API_ENDPOINT/check-verification-status")
+    axios.get(`http://localhost:3000/auth/check-verification-status/${localStorage.getItem('token')}`)
       .then((response) => {
         setIsVerified(response.data.isVerified);
       })
