@@ -5,6 +5,7 @@ import { BrowserRouter,Navigate,Route, Routes } from "react-router-dom"
 import Dashboard from "./components/dashbord/Dashboard"
 import ForgetPassword from "./components/foregetPassword/forgetPassword"
 import SendEmail from "./components/sendEmail/SendEmail"
+import Status from "./components/changeStatus/Status"
 function App() {
   const [user, setUser] = useState(null);
   useEffect(()=>{
@@ -19,6 +20,7 @@ function App() {
         <Route path="/dashboard" element={user ? <Dashboard/> : <Navigate to={'/'}/>} />
         <Route path="/reset-password" element={<ForgetPassword/>} />
         <Route path="/send_Email" element={<SendEmail/>} />
+        <Route path="/changestatus" element={<Status />} />
       </Routes>
       </BrowserRouter>
   </React.StrictMode>

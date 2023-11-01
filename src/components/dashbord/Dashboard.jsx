@@ -2,10 +2,11 @@ import { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import "./index.css";
+import "../../../src/index.css"
 
 function Dashboard() {
 
-  const [user,setUser] = useState(null);
+  const [user,setUser] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate(); 
@@ -24,6 +25,7 @@ function Dashboard() {
 
   const sendVerificationEmail = () => {
     if (user) {
+      console.log(user.email);
       axios.post("http://localhost:3000/auth/send-verification-email2", { email: user.email })
         .then(() => {
           console.log("Verification email sent successfully");
@@ -77,20 +79,27 @@ function Dashboard() {
                 </ul>
             </nav>
       </header>
-      {isVerified ? ( 
-        <div>
-          <p className="welcome-message">Welcome, {user.username}!</p>
-          {}
-        </div>
-      ) : ( 
-        <div>
-          <p className="verification-message">
-            Your account is not verified. Please check your email for a verification link.
-          </p>
-          <button onClick={sendVerificationEmail}>Send Verification Email</button>
-        </div>
-      )}
-        </div>
+      {isVerified ? (
+      <div>
+        <p className="welcome-message">Welcome, {user.username}!</p>
+      </div>
+    ) : (
+      <div>
+        
+        <div className="flex h-screen justify-center items-center bg-gray-200">
+          
+    <div>
+    <p className="verification-message font-bold">
+          Your account is not verified. Please check your email for a verification link.
+          
+        </p>
+        <button  onClick={sendVerificationEmail} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        Send Verification Email</button>
+    </div>
+</div>
+      </div>
+    )}
+  </div>
   );
 }
 
