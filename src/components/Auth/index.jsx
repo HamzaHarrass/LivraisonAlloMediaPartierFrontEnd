@@ -99,7 +99,7 @@ function Auth() {
         email: loginEmail,
         password: loginPassword,
         };
-
+        console.log(user);
         axios
         .post("http://localhost:3000/auth/login", user)
         .then((response) => {
