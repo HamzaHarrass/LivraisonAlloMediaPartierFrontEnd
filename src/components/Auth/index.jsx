@@ -8,7 +8,7 @@ function Auth() {
     username: "",
     email: "",
     password: "",
-    role: "client",
+    role: "",
   });
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registrationError, setRegistrationError] = useState(null);
@@ -47,8 +47,7 @@ function Auth() {
 
   const register = () => {
     const { username, email, password, role ,confirmPassword } = formData;
-
-    if (!username || !email || !password || !confirmPassword) {
+    if (!username || !email || !password || !confirmPassword || !role) {
         setRegistrationError("Veuillez remplir tous les champs.");
         return;
       }
@@ -66,7 +65,7 @@ function Auth() {
       password,
       role,
     };
-
+console.log(newUser);
     axios
       .post("http://localhost:3000/auth/register", newUser)
       .then((response) => {
