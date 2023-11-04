@@ -1,4 +1,4 @@
-# PartierFrontEnd
+# LivraisonAlloMediaPartierFrontEnd
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -19,7 +19,7 @@ PartierFrontEnd est une application front-end basée sur React, Vite et Bocker c
 
 ## Installation
 
-Pour commencer à utiliser PartierFrontEnd, suivez ces étapes :
+Pour commencer à utiliser LivraisonAlloMediaPartierFrontEnd, suivez ces étapes :
 
 1. Clonez ce dépôt sur votre machine locale :
 
